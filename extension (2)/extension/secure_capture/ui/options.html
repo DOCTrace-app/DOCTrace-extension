@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual settings - DOCTrace</title>
+  <link rel="icon" href="./icons/icon32.png">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./options.css">
+  <script type="module" src="./options.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-left">
+      <div class="brand"><img src="./icons/icon48.png" alt=""><span class="brand-name">DOCTrace</span></div>
+      <span class="crumb">Manual settings</span>
+    </div>
+    <a class="btn" href="./sessions.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h8l4 4v14H6z"/><path d="M9 12h6M9 16h4"/></svg>Guides
+    </a>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1>Step descriptions</h1>
+      <p class="muted">Every recorded step gets a written instruction. Without an LLM, a simple template writes them. With an LLM, they read like a real tutorial.</p>
+    </div>
+
+    <section class="card">
+      <label class="toggle-row">
+        <span>
+          <b>Use an LLM to write the manual</b>
+          <span class="muted small" id="privacySummary">Off by default. Data sent depends on the selected provider.</span>
+        </span>
+        <span class="switch"><input type="checkbox" id="enabled"><span class="slider"></span></span>
+      </label>
+    </section>
+
+    <div id="llmFields">
+      <section class="card">
+        <h2>Connection</h2>
+        <div class="grid">
+          <label>Provider
+            <select id="provider">
+              <option value="groq">Groq (free, vision) - recommended</option>
+              <option value="mistral">Mistral (free tier, vision)</option>
+              <option value="gemini">Google Gemini API (vision)</option>
+              <option value="anthropic">Anthropic Claude API (text only)</option>
+              <option value="openai">OpenAI-compatible: OpenAI, Ollama, LM Studio (text only)</option>
+            </select>
+          </label>
+          <label>Model <input id="model" spellcheck="false"></label>
+          <label class="span2"><span id="endpointLabel">Endpoint URL</span> <input id="endpoint" spellcheck="false"></label>
+          <label class="span2">API key <input id="apiKey" type="password" autocomplete="off" placeholder="Not needed for a local endpoint"></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>When to write</h2>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="mode" value="batch"> <span><b>When the recording ends</b><span class="muted small">Batch requests after recording</span></span></label>
+          <label class="choice"><input type="radio" name="mode" value="realtime"> <span><b>After every step</b><span class="muted small">One request per step, while you record</span></span></label>
+          <label class="choice"><input type="radio" name="mode" value="off"> <span><b>Only when I click "Generate manual"</b><span class="muted small">Nothing is sent automatically</span></span></label>
+        </div>
+        <p id="geminiBatchNote" class="muted small" hidden>Each step is described as it is captured. Steps it could not describe in time (for example because of the free-tier rate limit) are filled in when the recording ends.</p>
+      </section>
+
+      <section class="card privacy-box">
+        <h2>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Privacy
+        </h2>
+        <p id="textPrivacy"><b>Anthropic and OpenAI-compatible providers:</b> only scrubbed step text and interaction metadata are sent, never screenshots, raw OCR text, or typed values. A second privacy check runs before every request. Cloud text endpoints receive this scrubbed text; a local endpoint keeps it on this machine.</p>
+        <p id="geminiPrivacy" hidden><b>Gemini:</b> scrubbed step text and redacted screenshots leave this device and go to Google. Raw screenshots are never sent. Redaction relies on OCR and can miss photos, unreadable text, or other information.</p>
+        <p id="geminiFreeTierWarning" hidden>On Google's free tier, Google may use submitted content to improve its products, human reviewers may read it, and Google says not to submit sensitive or personal information. Review the provider's current terms before enabling this option.</p>
+        <label class="row consent"><input type="checkbox" id="consent"> <span>I understand and allow scrubbed text to be sent to this endpoint.</span></label>
+        <label class="row consent" id="imageConsentRow" hidden><input type="checkbox" id="imageConsent"> <span id="imageConsentText">I separately understand and allow redacted screenshots to leave this device and be sent to the provider with step text.</span></label>
+      </section>
+    </div>
+
+    <section class="card privacy-box">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        Voice narration
+      </h2>
+      <p>Speak while you click. Your words are turned into text with Whisper (on Groq, using your Groq API key above), matched to the step you were on, and used to write that step. Tips you mention, like "only ZIP and PDF files are accepted", go into a <b>Note</b> on the step.</p>
+      <p>The transcript is scrubbed like the screen text. <b>The audio recording itself is not scrubbed</b>: it is kept with the guide and included in the ZIP export. Do not say passwords out loud.</p>
+      <label class="row consent"><input type="checkbox" id="voiceEnabled"> <span>Record my voice during recordings (also switchable in the popup).</span></label>
+      <label class="row consent"><input type="checkbox" id="voiceConsent"> <span>I allow my voice recording to be sent to Groq for transcription, and understand the unscrubbed audio is saved and exported with the guide.</span></label>
+      <div class="mic-box">
+        <label class="mic-pick">Microphone
+          <select id="micDevice"><option value="">System default</option></select>
+        </label>
+        <button id="btnMicTest" class="btn" type="button">Test microphone</button>
+        <div class="mic-meter" aria-hidden="true"><div id="micLevel"></div></div>
+        <p id="micTestText" class="small muted">Click "Test microphone" and say a few words. The bar should move while you talk.</p>
+      </div>
+      <label class="mic-pick" style="margin-top:12px">How spoken sentences are matched to steps
+        <select id="voiceMatching">
+          <option value="smart">Smart (recommended): uses the words you say, "this is...", "we will..." and tips</option>
+          <option value="timeWindow">Strict time window: speech between a click and the next click belongs to that click</option>
+        </select>
+      </label>
+      <p class="muted small">Changing this re-matches a guide the next time you click Generate manual (no new transcription needed).</p>
+      <p id="voiceStatus" class="muted small"></p>
+      <style>
+        .mic-box { display: grid; gap: 10px; margin-top: 12px; padding: 14px; border-radius: 12px; background: var(--surface-2); }
+        .mic-pick { display: grid; gap: 6px; font-weight: 600; }
+        .mic-pick select { width: 100%; }
+        .mic-meter { height: 10px; border-radius: 999px; background: var(--border); overflow: hidden; }
+        .mic-meter div { height: 100%; width: 0; background: #2f9e6a; transition: width .08s linear; }
+        #micTestText.ok { color: #2f9e6a; font-weight: 600; }
+        #micTestText.bad { color: #d14343; font-weight: 600; }
+      </style>
+    </section>
+
+    <div class="actions">
+      <button id="btnSave" class="btn btn-primary">Save settings</button>
+      <button id="btnTest" class="btn">Test connection</button>
+      <span id="status" class="small muted"></span>
+    </div>
+  </main>
+</body>
+</html>

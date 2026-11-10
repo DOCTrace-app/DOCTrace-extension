@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guides - DOCTrace</title>
+  <link rel="icon" href="./icons/icon32.png">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./sessions.css">
+  <script src="../group2/vendor/jszip/jszip.min.js"></script>
+  <script type="module" src="./sessions.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-left">
+      <div class="brand">
+        <img src="./icons/icon48.png" alt="">
+        <span class="brand-name">DOCTrace</span>
+      </div>
+      <span class="crumb">Guides</span>
+    </div>
+    <div class="bar-actions">
+      <button id="btnLive" class="btn btn-primary">
+        <span class="rec-dot" id="liveDot"></span><span id="liveLabel">New recording</span>
+      </button>
+      <a class="btn btn-ghost btn-icon" href="./options.html" title="Manual settings" aria-label="Manual settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <div class="app">
+    <aside class="sidebar">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg>
+        <input id="search" type="search" placeholder="Search guides" autocomplete="off">
+      </label>
+      <div class="eyebrow side-label">All guides <span id="listCount"></span></div>
+      <ul id="sessionList" class="session-list"></ul>
+      <p id="listEmpty" class="muted small side-empty" hidden>No guides yet. Start a recording and your guide appears here.</p>
+    </aside>
+
+    <main class="doc-area">
+      <section id="placeholder" class="placeholder">
+        <div class="empty">
+          <div class="empty-art" aria-hidden="true">
+            <div class="ea-card"><span></span><span class="r"></span><span></span></div>
+            <div class="ea-card b"><span></span><span></span><span class="r s"></span></div>
+          </div>
+          <h1>Turn any process into a step-by-step guide</h1>
+          <p class="muted">Start recording, click through your workflow, and DOCTrace writes the steps. Emails, phone numbers, IDs, passwords and keys are blacked out on your device before anything is saved.</p>
+          <button id="btnEmptyRec" class="btn btn-primary btn-lg"><span class="rec-dot"></span>Start recording</button>
+        </div>
+      </section>
+
+      <article id="detail" class="doc" hidden>
+        <div class="doc-toolbar">
+          <div class="toolbar-status" id="dStatus"></div>
+          <div class="detail-actions">
+            <button id="btnGenerate" class="btn btn-soft">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>
+              <span id="genLabel">Generate manual</span>
+            </button>
+            <div class="menu-wrap">
+              <button id="btnExportMenu" class="btn btn-primary" aria-haspopup="true" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Export
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 10l5 5 5-5"/></svg>
+              </button>
+              <div id="exportMenu" class="menu" role="menu" hidden>
+                <button id="btnPdf" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>
+                  <span><b>PDF</b><span>Print or save the guide as a PDF</span></span>
+                </button>
+                <button id="btnHtml" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>
+                  <span><b>HTML page</b><span>One file with the protected screenshots inside</span></span>
+                </button>
+                <button id="btnExport" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v4M12 9v2M12 13v2"/></svg>
+                  <span><b>ZIP package</b><span>Markdown manual, manifest and screenshots</span></span>
+                </button>
+                <button id="btnMarkdown" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>
+                  <span><b>Copy as Markdown</b><span>Text of every step, to paste anywhere</span></span>
+                </button>
+              </div>
+            </div>
+            <button id="btnFolder" class="btn btn-ghost btn-icon" title="Save all files to Downloads\DOCTrace again" aria-label="Save to folder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </button>
+            <button id="btnDelete" class="btn btn-ghost btn-icon danger-hover" title="Delete guide" aria-label="Delete guide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="doc-paper">
+          <header class="doc-head">
+            <input id="dTitle" class="doc-title" placeholder="Untitled guide" aria-label="Guide title" spellcheck="true">
+            <div id="dMeta" class="doc-meta"></div>
+            <textarea id="dIntro" class="f-desc doc-intro" rows="1" placeholder="Introduction (written from what you say before the first click, or type your own)" aria-label="Guide introduction"></textarea>
+          </header>
+
+          <section id="dPrivacy" class="privacy-card">
+            <div class="pc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <div class="pc-body">
+              <div id="dPrivacyTitle" class="pc-title"></div>
+              <div id="dChips" class="chips"></div>
+            </div>
+          </section>
+
+          <div id="dNotice" class="notice" hidden></div>
+          <ol id="steps" class="steps"></ol>
+        </div>
+      </article>
+    </main>
+
+    <nav class="outline" id="outline" hidden aria-label="Steps in this guide">
+      <div class="eyebrow">In this guide</div>
+      <ol id="outlineList"></ol>
+    </nav>
+  </div>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lbClose" class="btn btn-icon lb-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img id="lbImg" alt="">
+    <div id="lbCaption" class="lb-caption"></div>
+  </div>
+  <iframe id="printFrame" class="print-frame" title="Print preview" tabindex="-1" aria-hidden="true"></iframe>
+  <div id="toast" class="toast" hidden></div>
+</body>
+</html>

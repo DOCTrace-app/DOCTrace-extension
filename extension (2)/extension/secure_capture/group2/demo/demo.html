@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Group 2 Demo - Privacy &amp; Text Extraction</title>
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="./demo.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Group 2: Privacy &amp; Text Extraction</h1>
+    <p>Everything below runs inside this browser tab. The screenshot is not sent anywhere.</p>
+  </header>
+
+  <section class="controls">
+    <label>Test image
+      <select id="sample"></select>
+    </label>
+    <label>or your own screenshot
+      <input type="file" id="file" accept="image/*">
+    </label>
+    <label>dpr <input type="number" id="dpr" value="2" min="1" max="4" step="0.5"></label>
+    <button id="run">Run processFrame()</button>
+    <span id="status" class="status">Loading OCR engine on first run can take a few seconds.</span>
+  </section>
+
+  <main>
+    <section class="stage">
+      <h2>1. Original screenshot <small>(imageBlob, never changed)</small></h2>
+      <canvas id="cOriginal"></canvas>
+    </section>
+    <section class="stage">
+      <h2>2. OCR text + bounding boxes <small id="ocrInfo"></small></h2>
+      <canvas id="cOcr"></canvas>
+      <details><summary>OCR lines (raw, demo only)</summary><pre id="ocrLines"></pre></details>
+    </section>
+    <section class="stage">
+      <h2>3. Sensitive information detection</h2>
+      <div class="table-wrap"><table id="detTable"><thead>
+        <tr><th>Method</th><th>Rule</th><th>Type</th><th>Score</th><th>OCR text</th></tr>
+      </thead><tbody></tbody></table></div>
+    </section>
+    <section class="stage">
+      <h2>4. PII regions <small id="regionInfo"></small></h2>
+      <canvas id="cRegions"></canvas>
+    </section>
+    <section class="stage">
+      <h2>5. Redacted screenshot <small>(redactedBlob)</small></h2>
+      <canvas id="cRedacted"></canvas>
+    </section>
+    <section class="stage">
+      <h2>processFrame() output <small>(blobs shown as size only)</small></h2>
+      <pre id="output"></pre>
+    </section>
+  </main>
+</body>
+</html>

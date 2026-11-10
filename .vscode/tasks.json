@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Final Group 2 test suite",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"--test",
+				"extension (2)/extension/secure_capture/group2/tests/node/recorder.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/mlParity.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/detection.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/pipelineContract.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/international.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/gemini.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/capture.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/parallel.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/vision.test.mjs",
+				"extension (2)/extension/secure_capture/group2/tests/node/voice.test.mjs"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		}
+	]
+}

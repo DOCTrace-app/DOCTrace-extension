@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DOCTrace</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./popup.css">
+  <script type="module" src="./popup.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="./icons/icon48.png" alt="">
+      <span class="brand-name">DOCTrace</span>
+    </div>
+    <div class="top-actions">
+      <span class="pill" title="OCR and redaction run inside your browser">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        On-device
+      </span>
+      <button id="btnSettings" class="btn btn-ghost btn-icon" title="Manual settings" aria-label="Manual settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Record a workflow (primary) -->
+    <section class="rec-card" id="recCard">
+      <div class="rec-head">
+        <div class="rec-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/><path d="M13 4h7v7M20 4l-9 9"/></svg>
+        </div>
+        <div class="rec-text">
+          <div id="recTitle" class="rec-title">Record a workflow</div>
+          <div id="recSub" class="rec-sub">Click through your process. Every click becomes a guide step, with sensitive data hidden.</div>
+        </div>
+      </div>
+      <div class="rec-live" id="recLive" hidden>
+        <span class="rec-dot live"></span>
+        <span class="rec-timer" id="recTimer">00:00</span>
+        <span class="rec-steps" id="recSteps">0 steps</span>
+      </div>
+      <label class="rec-voice" id="voiceRow">
+        <input type="checkbox" id="voiceToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        <span id="voiceLabel">Record my voice</span>
+      </label>
+      <button id="btnRec" class="btn btn-primary btn-lg btn-block">
+        <span class="rec-dot" id="recBtnDot"></span>
+        <span id="recBtnLabel">Start recording</span>
+      </button>
+      <button id="btnOpenLast" class="btn btn-soft btn-block" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/></svg>
+        Open guide
+      </button>
+      <div id="recFolder" class="rec-folder" hidden></div>
+    </section>
+
+    <!-- One-off screenshot -->
+    <section class="shot-card">
+      <div class="shot-head">
+        <div>
+          <div class="shot-title">Screenshot this page</div>
+          <div class="muted small">Shortcut <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd></div>
+        </div>
+        <button id="btnCapture" class="btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8a2 2 0 0 1 2-2h2l1.5-2h5L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.5"/></svg>
+          <span id="captureLabel">Capture</span>
+        </button>
+      </div>
+
+      <section id="viewIdle" class="view" hidden></section>
+
+      <section id="viewBusy" class="view busy" hidden>
+        <div class="spinner sm"></div>
+        <div>
+          <div id="busyText" class="busy-text">Capturing the page...</div>
+          <div class="muted small">This usually takes a few seconds.</div>
+        </div>
+      </section>
+
+      <section id="viewResult" class="view" hidden>
+        <button id="thumbBtn" class="thumb" title="Open full view">
+          <img id="thumb" alt="Protected screenshot">
+          <span class="thumb-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/></svg>Protected
+          </span>
+        </button>
+        <div class="result-head">
+          <span id="resultIcon" class="result-icon"></span>
+          <div class="result-text">
+            <div id="resultTitle" class="result-title"></div>
+            <div id="resultMeta" class="muted small"></div>
+          </div>
+        </div>
+        <div id="chips" class="chips"></div>
+        <div class="actions">
+          <button id="btnDownload" class="btn btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download
+          </button>
+          <button id="btnCopy" class="btn btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>Copy
+          </button>
+          <button id="btnOpen" class="btn btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Open
+          </button>
+        </div>
+      </section>
+
+      <section id="viewError" class="view" hidden>
+        <div class="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+          <div id="errorText"></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Recent guides -->
+    <section class="recent">
+      <div class="recent-head">
+        <span class="eyebrow">Recent guides</span>
+        <button id="btnSessions" class="link-btn">View all <span id="recBadge" class="rec-badge" hidden>REC</span></button>
+      </div>
+      <ul id="recentList" class="recent-list"></ul>
+      <p id="recentEmpty" class="muted small recent-empty" hidden>Your recorded guides will appear here.</p>
+    </section>
+  </main>
+
+  <footer>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    Raw screenshots are never saved or uploaded. With an AI provider and separate consent, only locally redacted screenshots are sent.
+  </footer>
+  <div id="toast" class="toast" hidden></div>
+</body>
+</html>

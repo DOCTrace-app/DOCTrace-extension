@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Group 2 Tests</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; margin: 24px; }
+    .pass { color: #1e8449; } .fail { color: #c0392b; font-weight: bold; }
+    li { margin: 4px 0; } small { opacity: .7; }
+    #summary { font-size: 18px; margin: 12px 0; }
+  </style>
+  <script type="module" src="./browserTests.js"></script>
+</head>
+<body>
+  <h1>Group 2 browser tests</h1>
+  <p>Runs processFrame() on every case in /testdata/cases.json, plus contract and privacy checks.</p>
+  <div id="summary">Running...</div>
+  <ul id="results"></ul>
+</body>
+</html>

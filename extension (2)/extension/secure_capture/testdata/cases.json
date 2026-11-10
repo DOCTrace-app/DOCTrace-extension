@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "Normal screenshot: text extracted",
+    "file": "01_normal_ui.png",
+    "expectStatus": "redacted",
+    "expectText": [
+      "Dashboard",
+      "Settings"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Fake email detected and masked",
+    "file": "02_email.png",
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "email"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Fake phone detected and masked",
+    "file": "03_phone.png",
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "phone"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Fake CNIC detected and masked",
+    "file": "04_cnic.png",
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "cnic"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Password: ******** detected by keyword + spatial context",
+    "file": "05_password.png",
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "password"
+    ],
+    "minRegions": 2
+  },
+  {
+    "id": 6,
+    "name": "API_KEY: ABC123XYZ detected and masked",
+    "file": "06_api_key.png",
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "api_key"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Normal UI text is not masked",
+    "file": "01_normal_ui.png",
+    "expectStatus": "redacted",
+    "maxRegions": 0
+  },
+  {
+    "id": 8,
+    "name": "OCR failure gives status failed",
+    "file": "08_corrupt.png",
+    "expectStatus": "failed"
+  },
+  {
+    "id": 9,
+    "name": "Mixed settings screen (demo)",
+    "file": "07_mixed_settings.png",
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "email",
+      "phone",
+      "cnic",
+      "password",
+      "api_key"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Low resolution dpr=1 screenshot (2x OCR upscale)",
+    "file": "09_mixed_dpr1.png",
+    "dpr": 1,
+    "expectStatus": "redacted",
+    "expectTypes": [
+      "email",
+      "phone",
+      "cnic",
+      "password",
+      "api_key"
+    ]
+  }
+]

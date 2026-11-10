@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protected capture - DOCTrace</title>
+  <link rel="icon" href="./icons/icon32.png">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./viewer.css">
+  <script type="module" src="./viewer.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-left">
+      <div class="brand">
+        <img src="./icons/icon48.png" alt="">
+        <span class="brand-name">DOCTrace</span>
+      </div>
+      <span class="crumb">Protected screenshot</span>
+    </div>
+    <div class="bar-actions" id="actions" hidden>
+      <a class="btn btn-ghost" href="./sessions.html">Guides</a>
+      <button id="btnCopy" class="btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg>Copy
+      </button>
+      <button id="btnDownload" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download PNG
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="stage" id="stage" hidden>
+      <div class="stage-frame">
+        <div class="frame-bar"><span></span><span></span><span></span></div>
+        <img id="image" alt="Protected screenshot">
+      </div>
+    </section>
+
+    <aside class="panel" id="panel" hidden>
+      <div class="panel-block summary">
+        <div id="summaryTitle" class="summary-title"></div>
+        <div id="summaryMeta" class="muted small"></div>
+      </div>
+      <div class="panel-block" id="typesBlock">
+        <div class="panel-label">Hidden information</div>
+        <ul id="typeList" class="type-list"></ul>
+      </div>
+      <div class="panel-block">
+        <div class="panel-label">Capture</div>
+        <dl class="facts">
+          <dt>Page</dt><dd id="factPage"></dd>
+          <dt>Size</dt><dd id="factSize"></dd>
+          <dt>Text read</dt><dd id="factWords"></dd>
+        </dl>
+      </div>
+      <div class="privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span>Text recognition and masking ran on this device. Only this protected copy is kept, in browser memory, until you close Chrome.</span>
+      </div>
+    </aside>
+
+    <section class="empty" id="empty" hidden>
+      <div class="empty-card">
+        <h1 id="emptyTitle">No capture yet</h1>
+        <p id="emptyText" class="muted">Click the DOCTrace icon in the toolbar, or press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> on any page.</p>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast" hidden></div>
+</body>
+</html>

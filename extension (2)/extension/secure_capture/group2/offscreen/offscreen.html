@@ -1,0 +1,12 @@
+<!doctype html>
+<!-- Group 2 offscreen document. Hosts processFrame() because the MV3 service
+     worker cannot run Web Workers, WASM OCR with a DOM, or canvas decoding well.
+     It has no visible UI. -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOCTrace - Privacy processor</title>
+  <script type="module" src="./offscreen.js"></script>
+</head>
+<body></body>
+</html>

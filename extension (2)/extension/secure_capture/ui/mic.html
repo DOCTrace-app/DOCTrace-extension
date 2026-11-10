@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Allow microphone - DOCTrace</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    body { display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 16px; }
+    .card { max-width: 460px; padding: 28px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); text-align: center; }
+    h1 { font-size: 20px; margin: 0 0 8px; }
+    p { color: var(--text-2); margin: 0 0 18px; line-height: 1.55; }
+    .ok { color: #2f9e6a; font-weight: 600; }
+    .err { color: #d14343; font-weight: 600; }
+  </style>
+  <script type="module" src="./mic.js"></script>
+</head>
+<body>
+  <div class="card">
+    <h1>Allow DOCTrace to use your microphone</h1>
+    <p id="text">Chrome asks once. DOCTrace records your voice only while a recording is running, so it can add your spoken explanations to the guide.</p>
+    <button id="btnAllow" class="btn btn-primary">Allow microphone</button>
+  </div>
+</body>
+</html>

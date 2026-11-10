@@ -1,0 +1,71 @@
+{
+  "manifest_version": 3,
+  "name": "DOCTrace",
+  "short_name": "DOCTrace",
+  "description": "Record clicks into step-by-step guides. Emails, phones, IDs, passwords and API keys are hidden on your device before saving.",
+  "version": "1.9.0",
+  "icons": {
+    "16": "ui/icons/icon16.png",
+    "32": "ui/icons/icon32.png",
+    "48": "ui/icons/icon48.png",
+    "128": "ui/icons/icon128.png"
+  },
+  "action": {
+    "default_title": "DOCTrace",
+    "default_popup": "ui/popup.html",
+    "default_icon": {
+      "16": "ui/icons/icon16.png",
+      "32": "ui/icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "offscreen",
+    "storage",
+    "unlimitedStorage",
+    "scripting",
+    "downloads",
+    "downloads.ui"
+  ],
+  "commands": {
+    "capture-protect": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Capture the visible tab and hide sensitive information"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "minimum_chrome_version": "116",
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://127.0.0.1:*/*",
+    "http://localhost/*",
+    "http://localhost:*/*",
+    "<all_urls>"
+  ],
+  "options_ui": {
+    "page": "ui/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file:///*"
+      ],
+      "js": [
+        "content/recorder.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
