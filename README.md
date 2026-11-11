@@ -2,7 +2,6 @@
 
 DOCTrace is a Chrome extension that turns your clicks into step-by-step guides. Click through a process once and every click becomes a step, with a screenshot and a written instruction. Emails, phone numbers, ID numbers, card numbers, passwords and API keys are blacked out on your own device before anything is saved.
 
-![DOCTrace redaction demo](extension%20(2)/extension/secure_capture/group2/docs/demo_screenshot.png)
 
 ## Features
 
