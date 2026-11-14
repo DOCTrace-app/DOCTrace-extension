@@ -76,7 +76,8 @@ extension (2)/extension/secure_capture/   <- the extension (load this folder in 
 └── testdata/            fake test screenshots and expected results
 ```
 
-For a detailed tour of the privacy pipeline, its function contract and its design choices, see the [privacy pipeline README](extension%20(2)/extension/secure_capture/group2/README.md).
+For a detailed tour of the privacy pipeline, its function contract and its design choices, see the [privacy pipeline README](extension%20(2)/extension/secure_capture/group2/README.md). 
+[Read the DOCTrace Technical Document](https://github.com/DOCTrace-app/DOCTrace-extension/blob/main/DOCTrace%20Technical%20Document.pdf)
 
 ## Running the tests
 
