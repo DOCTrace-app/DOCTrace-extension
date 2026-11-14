@@ -1,4 +1,4 @@
-#Privacy & Text Extraction
+# Privacy & Text Extraction
 
 This module takes a raw screenshot frame, reads the text on it (OCR), finds sensitive information, and returns a copy of the screenshot with that information covered by black boxes. OCR and redaction run locally. Raw screenshots are never uploaded. The AI guide writer is off by default. If the user turns it on, picks a vision provider (Groq, Mistral or Gemini) and separately consents to screenshots, the guide generator sends stored redacted screenshots and scrubbed step text to that provider. Text-only providers (Anthropic, OpenAI-compatible) receive scrubbed text only. Voice narration is also off by default; when the user turns it on and consents, the audio is sent to Groq Whisper for transcription. The Options-page connection test uses a synthetic testdata image, redacts it locally, and sends only that redactedBlob. OCR redaction can miss photos and text it cannot read.
 
